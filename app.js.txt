@@ -1,0 +1,53 @@
+const stripe = Stripe("pk_test_YOUR_PUBLIC_KEY"); // Stripe public key
+const elements = stripe.elements();
+const card = elements.create("card");
+card.mount("#card-element");
+
+const translations = {
+  en: {
+    title: "Welcome to Bibostor",
+    subtitle: "Modern shopping experience",
+    product: "Premium Product",
+    buy: "Buy Now",
+    pay: "Pay"
+  },
+  fr: {
+    title: "Bienvenue sur Bibostor",
+    subtitle: "Expérience d'achat moderne",
+    product: "Produit Premium",
+    buy: "Acheter",
+    pay: "Payer"
+  },
+  ar: {
+    title: "مرحبًا بكم في بيبوستور",
+    subtitle: "تجربة تسوق حديثة",
+    product: "منتج مميز",
+    buy: "اشتر الآن",
+    pay: "ادفع"
+  },
+  es: {
+    title: "Bienvenido a Bibostor",
+    subtitle: "Experiencia de compra moderna",
+    product: "Producto Premium",
+    buy: "Comprar ahora",
+    pay: "Pagar"
+  }
+};
+
+const switcher = document.getElementById("languageSwitcher");
+
+switcher.addEventListener("change", () => {
+  const lang = switcher.value;
+  document.documentElement.lang = lang;
+  document.body.dir = lang === "ar" ? "rtl" : "ltr";
+
+  document.getElementById("title").innerText = translations[lang].title;
+  document.getElementById("subtitle").innerText = translations[lang].subtitle;
+  document.getElementById("productName").innerText = translations[lang].product;
+  document.getElementById("buyBtn").innerText = translations[lang].buy;
+  document.getElementById("payBtn").innerText = translations[lang].pay;
+});
+
+document.getElementById("buyBtn").onclick = () => {
+  document.getElementById("payment-form").classList.remove("hidden");
+};
